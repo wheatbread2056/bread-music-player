@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;600&display=swap');
+:root {
+    --bg-color: rgb(48, 48, 48);
+    --dark-color: rgb(36,36,36);
+    --dark2-color: rgb(24,24,24);
+    --primary-color: #792dce;
+    --secondary-color: #5e23a1;
+    --accent-color: #974fe9;
+}
+body {
+    background-color: var(--bg-color); /* fallback */
+    color: white;
+    font-size: 24px;
+    font-family: 'Red Hat Display';
+    font-weight: 600;
+    margin: 0;
+}
+h1 {
+    font-size: 60px;
+}
+h2 {
+    font-size: 32px;
+    color: var(--accent-color);
+}
+br {
+    clear: both;
+    display: block;
+    content: "";
+}
+.navleft {
+    float: left;
+}
+.navright {
+    float: right;
+}
+.navitem a {
+    display: inline;
+    color: white;
+    text-decoration: none;
+    padding: 24px;
+    text-align: center;
+}
+.navigator {
+    list-style-type: none;
+    overflow: hidden;
+    background-color: var(--primary-color);
+    padding: 16px;
+    margin: 0px;
+}
+.navitem a:hover {
+    background-color: var(--secondary-color);
+}
+.center {
+    text-align: center;
+}
+.titles {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.🎃 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.container {
+    background-color: var(--dark-color);
+    border-radius: 32px;
+    text-align: left;
+    flex-grow: 0.4;
+}
+.song {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark2-color);
+    text-align: left;
+    border-radius: 32px;
+    padding: 32px;
+    margin: 32px;
+    flex-grow: 1;
+}
+.song2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark-color);
+    text-align: left;
+    border-radius: 32px;
+    padding: 32px;
+    margin: 32px;
+    flex-grow: 1;
+}
+.cover {
+    display: inline;
+    border-radius: 100%;
+    max-width: 128px;
+    max-height: 128px;
+}
+.search {
+    background-color: var(--dark-color);
+    border: 0px;
+    text-align: center;
+    min-width: 50%;
+    max-width: 80%;
+    overflow: auto;
+    height: 64px;
+    border-radius: 32px;
+    font-size: 24px;
+    font-family: 'Red Hat Display';
+    color: white;
+    font-weight: 600;
+    
+}
+::placeholder {
+    color: var(--accent-color);
+    font-style: italic;
+}
+.searchresult {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark-color);
+    text-align: left;
+    border-radius: 32px;
+    padding: 32px;
+    margin: 32px;
+    flex-grow: 1;
+}
