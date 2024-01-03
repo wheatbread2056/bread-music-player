@@ -10,7 +10,8 @@ function createPlaylist() {
     // empty for now
 }
 // colors and themes
-function changeTheme(cvar,color) {
+function modifyColor(cvar) {
+    color = prompt("Which color would you like to use? (hex supported)")
     const root = document.documentElement;
     root.style.setProperty(cvar, color);
 }
