@@ -145,10 +145,12 @@ br {
 .timebar::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
+    width: 24px; /* Set a specific slider handle width */
+    height: 24px; /* Slider handle height */
+    background: var(--accent-color); /* Green background */
     cursor: pointer; /* Cursor on hover */
+    border-radius: 32px;
+    border: none;
 }
 .timebar::-moz-range-thumb {
     -webkit-appearance: none; /* Override default look */
@@ -159,7 +161,4 @@ br {
     cursor: pointer; /* Cursor on hover */
     border-radius: 32px;
     border: none;
-}
-.clickable:hover {
-    background-color:var(--secondary-color);
 }
