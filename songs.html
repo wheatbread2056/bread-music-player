@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="fonts/stylesheet.css">
+    <script src="script.js"></script>
     <title>bread music player</title>
 </head>
 <body>
     <ul class="navigator">
         <li class="navitem navleft"><a href="dashboard.html">Dashboard</a></li>
-        <li class="navitem navleft"><a href="song2s.html">Songs</a></li>
+        <li class="navitem navleft"><a href="songs.html">Songs</a></li>
         <li class="navitem navleft"><a href="playlists.html">Playlists</a></li>
         <li class="navitem navleft"><a href="search.html">Search</a></li>
         <li class="navitem navright"><a href="settings.html">Settings</a></li>
@@ -19,7 +20,7 @@
     <center><h1 id="title">Your Song Library</h1></center>
     <br>
     <div class="🎃">
-        <div class="song2" style="background-color: var(--primary-color);">
+        <div class="song2" id="songimport" style="background-color: var(--primary-color);">
             <div>
                 <h2 style="color:white;font-weight:900">Import Songs</h2>
                 <p>Supported formats: mp3, wav, ogg</p>
