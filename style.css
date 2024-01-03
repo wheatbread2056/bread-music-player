@@ -162,5 +162,4 @@ br {
 }
 .clickable:hover {
     background-color:var(--secondary-color);
-    transition: background-color 0.5s ease;
 }

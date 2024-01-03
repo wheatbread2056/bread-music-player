@@ -1,6 +1,11 @@
+var data = [
+    // data here
+];
+
 function importMusic() {
-    alert("test");
+    const fileInput = document.getElementById("fileInput");
+    fileInput.click();
 }
 function createPlaylist() {
-    alert("test 2");
+    // empty for now
 }
