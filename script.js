@@ -28,11 +28,11 @@ function modifyColor2(cvar,color,id) {
 
 // initialize colors from localstorage
 var col1 = localStorage.getItem("--primary-color");
-alert(col1)
+alert(col1) // debugging
 var col2 = localStorage.getItem("--secondary-color");
-alert(col2)
+alert(col2) // debugging
 var col3 = localStorage.getItem("--accent-color");
-alert(col3)
+alert(col3) // debugging
 modifyColor2("--primary-color",col1,"col1");
 modifyColor2("--secondary-color",col2,"col2");
 modifyColor2("--accent-color",col3,"col3");
