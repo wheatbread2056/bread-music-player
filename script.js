@@ -53,13 +53,13 @@ if (ind1 != null && ind2 != null && ind3 != null) {
         ind1.textContent = "Selected: "+col1;
     }
     if (col2 == null) { // second color
-        ind1.textContent = "Selected: Default (purple)";
+        ind2.textContent = "Selected: Default (purple)";
     } else {
-        ind1.textContent = "Selected: "+col2;
+        ind2.textContent = "Selected: "+col2;
     }
     if (col3 == null) { // third color
-        ind1.textContent = "Selected: Default (purple)";
+        ind3.textContent = "Selected: Default (purple)";
     } else {
-        ind1.textContent = "Selected: "+col3;
+        ind3.textContent = "Selected: "+col3;
     }
 }
