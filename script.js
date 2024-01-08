@@ -47,17 +47,17 @@ var ind1 = document.getElementById("col1");
 var ind2 = document.getElementById("col2");
 var ind3 = document.getElementById("col3");
 if (ind1 != null && ind2 != null && ind3 != null) {
-    if (col1 == null) { // first color 
+    if (col1 == null || col1 == "") { // first color 
         ind1.textContent = "Selected: Default (purple)";
     } else {
         ind1.textContent = "Selected: "+col1;
     }
-    if (col2 == null) { // second color
+    if (col2 == null || col2 == "") { // second color
         ind2.textContent = "Selected: Default (purple)";
     } else {
         ind2.textContent = "Selected: "+col2;
     }
-    if (col3 == null) { // third color
+    if (col3 == null || col3 == "") { // third color
         ind3.textContent = "Selected: Default (purple)";
     } else {
         ind3.textContent = "Selected: "+col3;
