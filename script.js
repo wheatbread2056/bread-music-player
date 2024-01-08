@@ -34,6 +34,8 @@ modifyColor2("--accent-color",col3);
 var ind1 = document.getElementById("col1");
 var ind2 = document.getElementById("col2");
 var ind3 = document.getElementById("col3");
-ind1.textContent = "Selected: "+col1;
-ind2.textContent = "Selected: "+col2;
-ind3.textContent = "Selected: "+col3;
+if (ind1 != null && ind2 != null && ind3 != null) {
+    ind1.textContent = "Selected: "+col1;
+    ind2.textContent = "Selected: "+col2;
+    ind3.textContent = "Selected: "+col3;
+}
