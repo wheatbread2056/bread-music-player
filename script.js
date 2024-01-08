@@ -11,11 +11,16 @@ function createPlaylist() {
 }
 // colors and themes
 function modifyColor(cvar,id) {
-    color = prompt("Which color would you like to use? (hex and rgb supported)");
+    color = prompt("Which color would you like to use? (leave blank for default)");
     const root = document.documentElement;
     const indicator = document.getElementById(id);
     root.style.setProperty(cvar, color);
-    indicator.textContent = "Selected: "+color;
+    if (color == null || color == "" ) {
+        indicator.textContent = "Selected: Default (purple)";
+    } else {
+        indicator.textContent = "Selected: "+color;
+    }
+    
     localStorage.setItem(cvar,color);
 }
 function modifyColor2(cvar,color) {
