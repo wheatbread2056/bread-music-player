@@ -69,7 +69,7 @@ if (ind1 != null && ind2 != null && ind3 != null) {
     }
 }
 
-// NOT MY CODE, credit to w3schools for making this script 🙏
+// NOT MY CODE, credit to w3schools for making the includeHTML code
 function includeHTML() {
     var z, i, elmnt, file, xhttp;
     /* Loop through a collection of all HTML elements: */
