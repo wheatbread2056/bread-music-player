@@ -1,6 +1,3 @@
-// make the navbar
-const navbar = document.createElement("div")
-navbar.setAttribute("w3-include-html", "components/navbar.html");
 // NOT MY CODE, credit to w3schools for making the includeHTML code
 function includeHTML() {
     var z, i, elmnt, file, xhttp;
