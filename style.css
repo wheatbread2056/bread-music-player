@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;600;800&display=swap');
 :root {
-    --bg-color: rgb(48, 48, 48);
-    --dark-color: rgb(36,36,36);
-    --dark2-color: rgb(24,24,24);
+    --bg-color: #303030;
+    --dark-color: #242424;
+    --dark2-color: #181818;
     --primary-color: #792dce;
     --secondary-color: #5e23a1;
     --accent-color: #974fe9;
