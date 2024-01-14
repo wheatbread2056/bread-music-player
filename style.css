@@ -75,6 +75,20 @@ br {
     text-align: left;
     flex-grow: 0.4;
 }
+.container2 {
+    background-color: var(--dark-color);
+    opacity: 40%;
+    border-radius: 32px;
+    text-align: left;
+    flex-grow: 0.4;
+    min-width: 40%;
+    max-width: 100%;
+    min-height: 30%;
+    max-height: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+}
 .song {
     display: flex;
     justify-content: space-between;
