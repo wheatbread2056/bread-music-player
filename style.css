@@ -75,12 +75,10 @@ br {
     text-align: left;
     flex-grow: 0.4;
 }
-.container2 {
+.colormenu {
     background-color: var(--dark-color);
-    opacity: 40%;
+    opacity: 50%;
     border-radius: 32px;
-    text-align: left;
-    flex-grow: 0.4;
     min-width: 40%;
     max-width: 100%;
     min-height: 30%;
