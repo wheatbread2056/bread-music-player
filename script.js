@@ -1,3 +1,27 @@
+// color palette
+const primaryRed = "#ce2d2d";
+const secondaryRed = "#a12323"; // red
+const accentRed = "#e94f4f";
+
+const primaryOrange = "#ce652d";
+const secondaryOrange = "#a15e23"; // orange
+const accentOrange = "#e99c4f";
+
+const primaryYellow = "#ceb62d";
+const secondaryYellow = "#a18a23"; // yellow
+const accentYellow = "#e9cf4f";
+
+const primaryGreen = "#32ce2d";
+const secondaryGreen = "#23a125"; // green
+const accentGreen = "#4fe961";
+
+const primaryBlue = "#2d65ce";
+const secondaryBlue = "#2357a1"; // blue
+const accentBlue = "#4f8de9";
+
+const primaryPurple = "#792dce";
+const secondaryPurple = "#5e23a1"; // purple
+const accentPurple = "#974fe9";
 var data = [
     // data here
 ];
