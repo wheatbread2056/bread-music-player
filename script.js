@@ -92,3 +92,230 @@ if (ind1 != null && ind2 != null && ind3 != null) {
         ind3.textContent = "Selected: "+col3;
     }
 }
+
+var currentSong = "default.mp3"; // Set the default song
+var playlists = []; // Array to store playlists
+
+// Function to play a playlist
+function playPlaylist(playlistIndex) {
+    if (playlistIndex >= 0 && playlistIndex < playlists.length) {
+        var playlist = playlists[playlistIndex];
+        // Assuming you have an audio element with ID "audioPlayer" on your pages
+        var audioPlayer = document.getElementById("audioPlayer");
+
+        // Clear existing playlist and add new songs
+        audioPlayer.innerHTML = "";
+        for (var i = 0; i < playlist.songs.length; i++) {
+            var song = playlist.songs[i];
+            var audioSource = document.createElement("source");
+            audioSource.src = song.url;
+            audioSource.type = "audio/mp3"; // Change the type as needed
+            audioPlayer.appendChild(audioSource);
+        }
+
+        // Play the first song
+        audioPlayer.load();
+        audioPlayer.play();
+    }
+}
+
+// Update the playlists menu based on local storage
+function updatePlaylistsMenu() {
+    const playlistMenu = document.getElementById("playlistMenu");
+    if (playlistMenu) {
+        const playlists = JSON.parse(localStorage.getItem("playlists")) || [];
+        let html = "";
+        playlists.forEach(playlist => {
+            html += `<div class="playlist-item">${playlist}</div>`;
+        });
+        playlistMenu.innerHTML = html;
+    }
+}
+
+function importMusic() {
+    const fileInput = document.getElementById("fileInput");
+    fileInput.click();
+}
+
+function createPlaylist() {
+    var playlistName = prompt("Enter the name for your new playlist:");
+    if (playlistName) {
+        var newPlaylist = {
+            name: playlistName,
+            songs: [] // Array to store songs in the playlist
+        };
+        playlists.push(newPlaylist);
+        updatePlaylistsMenu(); // Update the playlists menu (if you have one)
+        alert("Playlist created successfully!");
+    }
+}
+
+function playSong(songPath) {
+    var audioPlayer = document.getElementById("musicPlayer");
+    audioPlayer.src = songPath;
+    audioPlayer.play();
+    currentSong = songPath;
+}
+
+function addToPlaylist(playlistIndex, songPath) {
+    if (playlistIndex >= 0 && playlistIndex < playlists.length) {
+        playlists[playlistIndex].songs.push(songPath);
+        alert("Song added to the playlist!");
+    }
+}
+
+// Update the song switching and playlist logic based on your HTML structure
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("song") || event.target.parentElement.classList.contains("song")) {
+        // Check if the clicked element or its parent has the class "song"
+        var songElement = event.target.closest(".song");
+        var songTitle = songElement.querySelector("h2").innerText;
+        var songArtist = songElement.querySelector("p").innerText;
+
+        // Construct the path to the song based on your structure
+        var songPath = "path/to/your/songs/" + songTitle + " - " + songArtist + ".mp3";
+
+        playSong(songPath);
+    }
+
+    if (event.target.classList.contains("song2") || event.target.parentElement.classList.contains("song2")) {
+        // Check if the clicked element or its parent has the class "song2"
+        var playlistElement = event.target.closest(".song2");
+        var playlistIndex = Array.from(playlistElement.parentElement.children).indexOf(playlistElement);
+
+        if (playlistIndex > 0) {
+            // Assuming the first element is the "Create New Playlist" button
+            addToPlaylist(playlistIndex - 1, currentSong);
+        }
+    }
+});
+
+// Function to edit a playlist name
+function editPlaylist(playlistIndex) {
+    if (playlistIndex >= 0 && playlistIndex < playlists.length) {
+        var newPlaylistName = prompt("Enter the new name for the playlist:", playlists[playlistIndex].name);
+        if (newPlaylistName) {
+            playlists[playlistIndex].name = newPlaylistName;
+            updatePlaylistsMenu(); // Update the playlists menu (if you have one)
+            savePlaylistsToLocal(); // Save changes to localStorage
+            alert("Playlist name updated successfully!");
+        }
+    }
+}
+
+// Function to remove a song from a playlist
+function removeFromPlaylist(playlistIndex, songIndex) {
+    if (playlistIndex >= 0 && playlistIndex < playlists.length && songIndex >= 0 && songIndex < playlists[playlistIndex].songs.length) {
+        playlists[playlistIndex].songs.splice(songIndex, 1);
+        savePlaylistsToLocal(); // Save changes to localStorage
+        alert("Song removed from the playlist!");
+    }
+}
+
+// Save playlists to localStorage
+function savePlaylistsToLocal() {
+    localStorage.setItem("playlists", JSON.stringify(playlists));
+}
+
+// Load playlists from localStorage
+function loadPlaylistsFromLocal() {
+    var storedPlaylists = localStorage.getItem("playlists");
+    if (storedPlaylists) {
+        playlists = JSON.parse(storedPlaylists);
+    }
+}
+
+// Initialize playlists from localStorage
+loadPlaylistsFromLocal();
+
+// Function to import songs and play them
+function importMusicAndPlay() {
+    const fileInput = document.getElementById("fileInput");
+    fileInput.addEventListener("change", function() {
+        const files = fileInput.files;
+        if (files.length > 0) {
+            const file = files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const song = {
+                    name: file.name.replace(/\.[^/.]+$/, ""), // Remove file extension
+                    artist: "Unknown Artist",
+                    url: e.target.result
+                };
+
+                // Assuming you have an audio element with ID "audioPlayer" on your pages
+                const audioPlayer = document.getElementById("audioPlayer");
+                const audioSource = document.createElement("source");
+                audioSource.src = song.url;
+                audioSource.type = "audio/mp3"; // Change the type as needed
+
+                // Save the song to local storage
+                saveSongToLocalstorage(song);
+
+                // Clear existing playlist and add the new song
+                audioPlayer.innerHTML = "";
+                audioPlayer.appendChild(audioSource);
+
+                // Play the song
+                audioPlayer.load();
+                audioPlayer.play();
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    fileInput.click();
+}
+
+// Function to save a song to local storage
+function saveSongToLocalstorage(song) {
+    let songs = JSON.parse(localStorage.getItem("songs")) || [];
+    songs.push(song);
+    localStorage.setItem("songs", JSON.stringify(songs));
+}
+
+
+// Perform actions related to clicking a playlist item
+function initializePlaylistClick() {
+    const playlistMenu = document.getElementById("playlistMenu");
+    if (playlistMenu) {
+        playlistMenu.onclick = function (event) {
+            const playlistName = event.target.textContent;
+            if (playlistName) {
+                loadPlaylist(playlistName);
+            }
+        };
+    }
+}
+
+// Load and display songs associated with a playlist
+function loadPlaylist(playlistName) {
+    const playlists = JSON.parse(localStorage.getItem("playlists")) || [];
+    const selectedPlaylist = playlists.find(playlist => playlist === playlistName);
+
+    if (selectedPlaylist) {
+        const songs = JSON.parse(localStorage.getItem(selectedPlaylist)) || [];
+        displaySongs(songs);
+    }
+}
+
+// Display songs in the UI
+function displaySongs(songs) {
+    const songsContainer = document.getElementById("songsContainer");
+    
+    if (songsContainer) {
+        let html = "";
+        songs.forEach(song => {
+            html += `<div class="song">${song}</div>`;
+        });
+        songsContainer.innerHTML = html;
+    }
+}
+
+// Call these functions on page load
+window.onload = function () {
+    updatePlaylistsMenu();
+    initializePlaylistClick();
+};

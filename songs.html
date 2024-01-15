@@ -1,3 +1,5 @@
+<!-- songs.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,56 +16,16 @@
     <center><h1 id="title">Your Song Library</h1></center>
     <br>
     <div class="🎃">
-        <div class="song2 clickable" onclick="importMusic()" style="background-color: var(--primary-color);">
+        <div class="song2 clickable" onclick="importMusicAndPlay()" style="background-color: var(--primary-color);">
             <div>
-                <h2 style="color:white;font-weight:900">Import Songs</h2>
+                <h2 style="color:white;font-weight:900">Import Songs and Play</h2>
                 <p>Supported formats: mp3, wav, ogg</p>
             </div>
             <img class="cover" src="img/plus.png">
         </div>
-        <div class="song2">
-            <div>
-                <h2>French</h2>
-                <p>Kanye West</p>
-            </div>
-            <img class="cover" src="img/song.png">
-        </div>
-        <div class="song2">
-            <div>
-                <h2>Example Song</h2>
-                <p>Example Artist</p>
-            </div>
-            <img class="cover" src="img/song.png">
-        </div>
-        <div class="song2">
-            <div>
-                <h2>Ringtone</h2>
-                <p>Samsung</p>
-            </div>
-            <img class="cover" src="img/song.png">
-        </div>
-        <div class="song2">
-            <div>
-                <h2>Generic Song Title</h2>
-                <p>Definitely A Real Artist</p>
-            </div>
-            <img class="cover" src="img/song.png">
-        </div>
-        <div class="song2">
-            <div>
-                <h2>Example Song</h2>
-                <p>Example Artist</p>
-            </div>
-            <img class="cover" src="img/song.png">
-        </div>
-        <div class="song2">
-            <div>
-                <h2>Example Song</h2>
-                <p>Example Artist</p>
-            </div>
-            <img class="cover" src="img/song.png">
-        </div>
+        <!-- Other songs... -->
     </div>
+    <audio id="audioPlayer" controls></audio> <!-- Add this audio element -->
     <script src="script.js"></script>
 </body>
 </html>
