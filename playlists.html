@@ -1,3 +1,5 @@
+<!-- playlists.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,53 +12,101 @@
 <body>
     <div w3-include-html="components/navbar.html"></div>
     <script src="include.js"></script>
-    <input type="file" id="fileInput" accept=".mp3, .wav, .ogg" style="display: none;">
     <center><h1 id="title">Your Playlists</h1></center>
     <br>
-    <div class="🎃">
-        <div class="song2 clickable" onclick="createPlaylist()" style="background-color: var(--primary-color);">
-            <div>
-                <h2 style="color:white;font-weight:900">Create New Playlist</h2>
-                <p>Supports up to 4,096 songs.</p>
-            </div>
-            <img class="cover" src="img/plus.png">
+    <center>
+        <div class="searchresult" onclick="createPlaylist()">
+            <h3>Create New Playlist</h3>
+            <p>Click here to create a new playlist</p>
         </div>
-        <div class="song2">
-            <div>
-                <h2>Example Playlist</h2>
-                <p># of Songs</p>
-            </div>
-            <img class="cover" src="img/playlist.png">
+    </center>
+    
+    <!-- Add a button to edit playlists -->
+    <center>
+        <div class="searchresult" onclick="editPlaylists()">
+            <h3>Edit Playlists</h3>
+            <p>Click here to edit existing playlists</p>
         </div>
-        <div class="song2">
-            <div>
-                <h2>Example Playlist</h2>
-                <p># of Songs</p>
-            </div>
-            <img class="cover" src="img/playlist.png">
-        </div>
-        <div class="song2">
-            <div>
-                <h2>Example Playlist</h2>
-                <p># of Songs</p>
-            </div>
-            <img class="cover" src="img/playlist.png">
-        </div>
-        <div class="song2">
-            <div>
-                <h2>Example Playlist</h2>
-                <p># of Songs</p>
-            </div>
-            <img class="cover" src="img/playlist.png">
-        </div>
-        <div class="song2">
-            <div>
-                <h2>Example Playlist</h2>
-                <p># of Songs</p>
-            </div>
-            <img class="cover" src="img/playlist.png">
-        </div>
-    </div>
+    </center>
+
+<div class="🎃" id="playlistsContainer">
+    <!-- Playlists will be dynamically added here -->
+</div>
+
+    <script>
+    // Function to create a new playlist
+    function createPlaylist() {
+        const playlists = JSON.parse(localStorage.getItem("playlists")) || [];
+        const playlistName = prompt("Enter the name for your new playlist:");
+
+        if (playlistName) {
+            const newPlaylist = { name: playlistName, songs: [] };
+            playlists.push(newPlaylist);
+            localStorage.setItem("playlists", JSON.stringify(playlists));
+            updatePlaylistsMenu();
+        }
+    }
+
+    // Function to edit playlists
+    function editPlaylists() {
+        const playlists = JSON.parse(localStorage.getItem("playlists")) || [];
+        const playlistIndex = prompt("Enter the index of the playlist you want to edit:");
+
+        if (playlistIndex && playlistIndex >= 0 && playlistIndex < playlists.length) {
+            const newName = prompt("Enter the new name for the playlist:");
+            if (newName) {
+                playlists[playlistIndex].name = newName;
+                localStorage.setItem("playlists", JSON.stringify(playlists));
+                updatePlaylistsMenu();
+            }
+        }
+    }
+    
+        // Function to update the playlists menu
+        function updatePlaylistsMenu() {
+            const playlistsContainer = document.getElementById("playlistsContainer");
+            const playlists = JSON.parse(localStorage.getItem("playlists")) || [];
+    
+            // Clear existing playlists in the menu
+            playlistsContainer.innerHTML = "";
+    
+            // Add each playlist to the menu
+            for (let i = 0; i < playlists.length; i++) {
+                const playlist = playlists[i];
+    
+                const playlistElement = document.createElement("div");
+                playlistElement.classList.add("song2");
+                playlistElement.onclick = function () {
+                    playPlaylist(playlist);
+                };
+    
+                const playlistInfo = document.createElement("div");
+                playlistInfo.innerHTML = `<h2>${playlist.name}</h2><p>${playlist.songs.length} songs</p>`;
+                playlistElement.appendChild(playlistInfo);
+    
+                const playlistImage = document.createElement("img");
+                playlistImage.classList.add("cover");
+                playlistImage.src = "img/playlist.png";
+                playlistElement.appendChild(playlistImage);
+    
+                playlistsContainer.appendChild(playlistElement);
+            }
+        }
+    
+        // Function to play songs from a playlist
+        function playPlaylist(playlist) {
+            // Implement logic to play songs from the selected playlist
+            // You can use the 'playlist.songs' array to get the list of songs in the playlist
+            // For simplicity, let's log the playlist name and songs to the console
+            console.log(`Playing playlist: ${playlist.name}`);
+            console.log('Songs:', playlist.songs);
+        }
+
+            // Load playlists on page load
+            window.onload = function () {
+                updatePlaylistsMenu();
+            };
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

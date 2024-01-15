@@ -68,6 +68,21 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Function to update the now playing iframe content
+        function updateNowPlaying() {
+            const iframe = document.getElementById('nowPlayingFrame');
+            if (iframe) {
+                iframe.src = 'music_frame.html';
+            }
+        }
+
+        // Call the updateNowPlaying function on page load
+        window.onload = function () {
+            updateNowPlaying();
+        };
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
