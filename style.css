@@ -120,20 +120,21 @@ br {
 .colormenu {
     border-radius: 32px;
     background-color: var(--dark-color);
-    padding: 32px;
-    position: fixed;
+    padding: 16px; /* Adjust the padding to make it smaller */
+    position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, 50%);
-    min-height: 30%;
-    min-width: 50%;
+    top: 55%; /* Adjust the top value to bring it down */
+    transform: translate(-50%, -50%);
+    width: 50%; /* Adjust the width as needed */
+    max-width: 500px; /* Adjust the max-width to make it smaller */
     z-index: 50;
+    margin: auto; /* Add this line for centering */
 }
 .cmbutton {
     border-radius: 16px;
     background-color: var(--dark2-color);
     padding: 16px;
-    width: 100%;
+    width: 95%;
     height: 32px;
     text-align: center;
     z-index: 51;
