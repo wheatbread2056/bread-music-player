@@ -169,9 +169,9 @@ br {
 .player {
     position: absolute;
     width: 100%;
-    height: 32px;
+    min-height: 64px;
     background-color: var(--primary-color);
-    bottom: 0;
+    bottom: 0vh;
     left: 0;
 }
 .timebar::-webkit-slider-thumb {
