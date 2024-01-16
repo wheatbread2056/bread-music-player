@@ -160,7 +160,7 @@ br {
 .timebar {
     -webkit-appearance: none;
     appearance: none;
-    width: 80%;
+    width: 60%;
     height: 24px;
     outline: none;
     background: var(--dark2-color);
@@ -184,22 +184,22 @@ br {
     border-right: 8px solid var(--dark2-color);
 }
 .timebar::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
     appearance: none;
-    width: 24px; /* Set a specific slider handle width */
-    height: 24px; /* Slider handle height */
-    background: var(--accent-color); /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    width: 24px;
+    height: 24px;
+    background: var(--accent-color);
+    cursor: pointer;
     border-radius: 32px;
     border: none;
 }
 .timebar::-moz-range-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
     appearance: none;
-    width: 24px; /* Set a specific slider handle width */
-    height: 24px; /* Slider handle height */
-    background: var(--accent-color); /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    width: 24px;
+    height: 24px;
+    background: var(--accent-color);
+    cursor: pointer;
     border-radius: 32px;
     border: none;
 }
