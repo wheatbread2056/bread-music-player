@@ -168,12 +168,20 @@ br {
 }
 .player {
     position: fixed;
-    width: 100%;
-    min-height: 64px;
-    background-color: var(--primary-color);
-    bottom: 0vh;
-    left: 0;
-    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    background-color: var(--dark-color);
+    bottom: 0;
+    left: 8px;
+    padding-left: 32px;
+    padding-right: 32px;
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+    border-top: 8px solid var(--dark2-color);
+    border-left: 8px solid var(--dark2-color);
+    border-right: 8px solid var(--dark2-color);
 }
 .timebar::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
