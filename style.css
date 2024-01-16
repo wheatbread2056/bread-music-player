@@ -167,7 +167,7 @@ br {
     border-radius: 24px;
 }
 .player {
-    position: absolute;
+    position: fixed;
     width: 100%;
     min-height: 64px;
     background-color: var(--primary-color);
