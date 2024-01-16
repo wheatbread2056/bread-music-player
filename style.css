@@ -163,6 +163,14 @@ br {
     background: var(--dark2-color);
     border-radius: 24px;
 }
+.player {
+    position: absolute;
+    width: 100%;
+    height: 32px;
+    background-color: var(--primary-color);
+    bottom: 0;
+    left: 0;
+}
 .timebar::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
