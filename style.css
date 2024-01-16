@@ -134,6 +134,7 @@ br {
 .cmbutton {
     border-radius: 16px;
     background-color: var(--dark2-color);
+    opacity: 100%;
     padding: 16px;
     margin: 16px;
     width: 95%;
