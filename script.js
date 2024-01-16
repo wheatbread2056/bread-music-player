@@ -26,13 +26,6 @@ var data = [
     // data here
 ];
 
-function importMusic() {
-    const fileInput = document.getElementById("fileInput");
-    fileInput.click();
-}
-function createPlaylist() {
-    // empty for now
-}
 // colors and themes
 function modifyColor(cvar,id) {
     color = prompt("Which color would you like to use? (leave blank for default)");
@@ -71,26 +64,30 @@ if (col3 == null) { // third color
 } else {
     modifyColor2("--accent-color",col3);
 }
-// update indicators
+
+// Update the indicators
 var ind1 = document.getElementById("col1");
 var ind2 = document.getElementById("col2");
 var ind3 = document.getElementById("col3");
+
 if (ind1 != null && ind2 != null && ind3 != null) {
     if (col1 == null || col1 == "") { // first color 
         ind1.textContent = "Selected: Default (purple)";
     } else {
-        ind1.textContent = "Selected: "+col1;
+        ind1.textContent = "Selected: " + col1;
     }
     if (col2 == null || col2 == "") { // second color
         ind2.textContent = "Selected: Default (purple)";
     } else {
-        ind2.textContent = "Selected: "+col2;
+        ind2.textContent = "Selected: " + col2;
     }
     if (col3 == null || col3 == "") { // third color
         ind3.textContent = "Selected: Default (purple)";
     } else {
-        ind3.textContent = "Selected: "+col3;
+        ind3.textContent = "Selected: " + col3;
     }
+} else {
+    console.error("One or more indicator elements not found.");
 }
 
 var currentSong = "default.mp3"; // Set the default song
@@ -132,24 +129,6 @@ function updatePlaylistsMenu() {
     }
 }
 
-function importMusic() {
-    const fileInput = document.getElementById("fileInput");
-    fileInput.click();
-}
-
-function createPlaylist() {
-    var playlistName = prompt("Enter the name for your new playlist:");
-    if (playlistName) {
-        var newPlaylist = {
-            name: playlistName,
-            songs: [] // Array to store songs in the playlist
-        };
-        playlists.push(newPlaylist);
-        updatePlaylistsMenu(); // Update the playlists menu (if you have one)
-        alert("Playlist created successfully!");
-    }
-}
-
 function playSong(songPath) {
     var audioPlayer = document.getElementById("musicPlayer");
     audioPlayer.src = songPath;
@@ -169,8 +148,8 @@ document.addEventListener("click", function (event) {
     if (event.target.classList.contains("song") || event.target.parentElement.classList.contains("song")) {
         // Check if the clicked element or its parent has the class "song"
         var songElement = event.target.closest(".song");
-        var songTitle = songElement.querySelector("h2").innerText;
-        var songArtist = songElement.querySelector("p").innerText;
+        var songTitle = songElement.querySelector(".song-details p");
+        var songArtist = songElement.querySelector("p");
 
         // Construct the path to the song based on your structure
         var songPath = "path/to/your/songs/" + songTitle + " - " + songArtist + ".mp3";
@@ -189,92 +168,6 @@ document.addEventListener("click", function (event) {
         }
     }
 });
-
-// Function to edit a playlist name
-function editPlaylist(playlistIndex) {
-    if (playlistIndex >= 0 && playlistIndex < playlists.length) {
-        var newPlaylistName = prompt("Enter the new name for the playlist:", playlists[playlistIndex].name);
-        if (newPlaylistName) {
-            playlists[playlistIndex].name = newPlaylistName;
-            updatePlaylistsMenu(); // Update the playlists menu (if you have one)
-            savePlaylistsToLocal(); // Save changes to localStorage
-            alert("Playlist name updated successfully!");
-        }
-    }
-}
-
-// Function to remove a song from a playlist
-function removeFromPlaylist(playlistIndex, songIndex) {
-    if (playlistIndex >= 0 && playlistIndex < playlists.length && songIndex >= 0 && songIndex < playlists[playlistIndex].songs.length) {
-        playlists[playlistIndex].songs.splice(songIndex, 1);
-        savePlaylistsToLocal(); // Save changes to localStorage
-        alert("Song removed from the playlist!");
-    }
-}
-
-// Save playlists to localStorage
-function savePlaylistsToLocal() {
-    localStorage.setItem("playlists", JSON.stringify(playlists));
-}
-
-// Load playlists from localStorage
-function loadPlaylistsFromLocal() {
-    var storedPlaylists = localStorage.getItem("playlists");
-    if (storedPlaylists) {
-        playlists = JSON.parse(storedPlaylists);
-    }
-}
-
-// Initialize playlists from localStorage
-loadPlaylistsFromLocal();
-
-// Function to import songs and play them
-function importMusicAndPlay() {
-    const fileInput = document.getElementById("fileInput");
-    fileInput.addEventListener("change", function() {
-        const files = fileInput.files;
-        if (files.length > 0) {
-            const file = files[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const song = {
-                    name: file.name.replace(/\.[^/.]+$/, ""), // Remove file extension
-                    artist: "Unknown Artist",
-                    url: e.target.result
-                };
-
-                // Assuming you have an audio element with ID "audioPlayer" on your pages
-                const audioPlayer = document.getElementById("audioPlayer");
-                const audioSource = document.createElement("source");
-                audioSource.src = song.url;
-                audioSource.type = "audio/mp3"; // Change the type as needed
-
-                // Save the song to local storage
-                saveSongToLocalstorage(song);
-
-                // Clear existing playlist and add the new song
-                audioPlayer.innerHTML = "";
-                audioPlayer.appendChild(audioSource);
-
-                // Play the song
-                audioPlayer.load();
-                audioPlayer.play();
-            };
-
-            reader.readAsDataURL(file);
-        }
-    });
-
-    fileInput.click();
-}
-
-// Function to save a song to local storage
-function saveSongToLocalstorage(song) {
-    let songs = JSON.parse(localStorage.getItem("songs")) || [];
-    songs.push(song);
-    localStorage.setItem("songs", JSON.stringify(songs));
-}
 
 
 // Perform actions related to clicking a playlist item
@@ -314,8 +207,322 @@ function displaySongs(songs) {
     }
 }
 
+// SOME OF THE CODE ABOVE IS UNUSED CURRENTLY, IT IS JUST THERE INCASE OF FUTURE COMMITS.
+
+// Function to save playlists to cache
+async function savePlaylistsToCache(playlists) {
+    const cacheName = 'playlistsCache';
+    const cache = await caches.open(cacheName);
+    const playlistsData = JSON.stringify(playlists);
+    const response = new Response(playlistsData, { headers: { 'Content-Type': 'application/json' } });
+    await cache.put('playlists', response);
+}
+
+// Function to load playlists from cache
+async function loadPlaylistsFromCache() {
+    const cacheName = 'playlistsCache';
+    const cache = await caches.open(cacheName);
+    const response = await cache.match('playlists');
+    if (response) {
+        const playlistsData = await response.json();
+        return playlistsData || [];
+    }
+    return [];
+}
+
+// Function to create a new playlist
+async function createPlaylist() {
+    const playlists = await loadPlaylistsFromCache();
+    const playlistName = prompt("Enter the name for your new playlist:");
+
+    if (playlistName) {
+        const newPlaylist = { name: playlistName, songs: [] };
+        playlists.push(newPlaylist);
+        await savePlaylistsToCache(playlists);
+        updatePlaylistsMenu();
+    }
+}
+
+// Function to edit playlists
+async function editPlaylists() {
+    const playlists = await loadPlaylistsFromCache();
+    const playlistIndex = prompt("Enter the index of the playlist you want to edit:");
+
+    if (playlistIndex && playlistIndex >= 0 && playlistIndex < playlists.length) {
+        const newName = prompt("Enter the new name for the playlist:");
+        if (newName) {
+            playlists[playlistIndex].name = newName;
+            await savePlaylistsToCache(playlists);
+            updatePlaylistsMenu();
+        }
+    }
+}
+
+// Function to update the playlists menu
+async function updatePlaylistsMenu() {
+    const playlistsContainer = document.getElementById("playlistsContainer");
+    const playlists = await loadPlaylistsFromCache();
+
+    // Clear existing playlists in the menu
+    playlistsContainer.innerHTML = "";
+
+    // Add each playlist to the menu
+    for (let i = 0; i < playlists.length; i++) {
+        const playlist = playlists[i];
+
+        const playlistElement = document.createElement("div");
+        playlistElement.classList.add("song2");
+        playlistElement.onclick = function () {
+            playPlaylist(playlist);
+        };
+
+        const playlistInfo = document.createElement("div");
+        playlistInfo.innerHTML = `<h2>${playlist.name}</h2><p>${playlist.songs.length} songs</p>`;
+        playlistElement.appendChild(playlistInfo);
+
+        const playlistImage = document.createElement("img");
+        playlistImage.classList.add("cover");
+        playlistImage.src = "img/playlist.png";
+        playlistElement.appendChild(playlistImage);
+
+        playlistsContainer.appendChild(playlistElement);
+    }
+}
+
+// Function to play songs from a playlist
+async function playPlaylist(playlist) {
+    // Implement logic to play songs from the selected playlist
+    // You can use the 'playlist.songs' array to get the list of songs in the playlist
+    // For simplicity, let's log the playlist name and songs to the console
+    console.log(`Playing playlist: ${playlist.name}`);
+    console.log('Songs:', playlist.songs);
+}
+
+// Load playlists on page load
+window.onload = function () {
+    updatePlaylistsMenu();
+};
+
+// Function to play songs from a playlist
+async function playPlaylist(playlist) {
+    // Assuming you have an audio element with ID "audioPlayer" on your pages
+    const audioPlayer = document.getElementById("audioPlayer");
+
+    // Clear existing playlist and add new songs
+    audioPlayer.innerHTML = "";
+    for (let i = 0; i < playlist.songs.length; i++) {
+        const songPath = playlist.songs[i];
+        await playSongFromCache(songPath);
+    }
+}
+
+// Function to play a song from cache
+async function playSongFromCache(songName) {
+    const cacheName = 'audioCache';
+    const cache = await caches.open(cacheName);
+
+    const response = await cache.match(songName);
+    if (response) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        // Assuming you have an audio element with ID "audioPlayer" on your pages
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        // Create a new audio source element for each song
+        const audioSource = document.createElement("source");
+        audioSource.src = url;
+        audioSource.type = "audio/mp3"; // Change the type as needed
+
+        // Append the audio source to the audio player
+        audioPlayer.appendChild(audioSource);
+    } else {
+        console.error("Song not found in cache.");
+    }
+    
+    // Play the first song
+    audioPlayer.load();
+    audioPlayer.play();
+}
+
+// Function to save a song to cache
+async function saveSongToCache(song) {
+    const cacheName = 'audioCache';
+    const cache = await caches.open(cacheName);
+
+    const response = await fetch(song.url);
+    const blob = await response.blob();
+    await cache.put(song.name, new Response(blob));
+}
+
+// Function to load songs from cache
+async function loadSongsFromCache() {
+    const cacheName = 'audioCache';
+    const cache = await caches.open(cacheName);
+
+    const requests = await cache.keys();
+    const songs = [];
+
+    for (const request of requests) {
+        const response = await cache.match(request);
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const song = { name: request.url, url };
+        songs.push(song);
+    }
+
+    return songs;
+}
+
+// Function to display songs in the UI
+function displaySongs(songs) {
+    const songsContainer = document.getElementById("songsContainer");
+
+    if (songsContainer) {
+        let html = "";
+        songs.forEach(song => {
+            html += `<div class="song">${song.name}</div>`;
+        });
+        songsContainer.innerHTML = html;
+    }
+}
+
+// Function to play a song
+function playSong(song) {
+    const audioPlayer = document.getElementById("audioPlayer");
+
+    // Clear existing sources and add the new song
+    audioPlayer.innerHTML = "";
+    const audioSource = document.createElement("source");
+    audioSource.src = song.url;
+    audioSource.type = "audio/mp3"; // Change the type as needed
+    audioPlayer.appendChild(audioSource);
+
+    // Play the song
+    audioPlayer.load();
+    audioPlayer.play();
+}
+
+// Call these functions on page load
+window.onload = async function () {
+    // Load and display all songs from cache on page load
+    const songs = await loadSongsFromCache();
+    displaySongs(songs);
+};
+
 // Call these functions on page load
 window.onload = function () {
     updatePlaylistsMenu();
     initializePlaylistClick();
 };
+
+// Function to extract metadata from an MP3 file
+async function getMetadata(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const audioData = event.target.result;
+            const id3Data = new ID3(audioData);
+            resolve(id3Data);
+        };
+        reader.readAsArrayBuffer(file);
+    });
+}
+
+// Function to add an h2 element based on file metadata
+async function addH2FromMetadata(file) {
+    const metadata = await getMetadata(file);
+    const title = metadata.title || "Unknown Title"; // Use a default title if metadata doesn't have one
+
+    const h2Element = document.createElement("h2");
+    h2Element.innerText = title;
+
+    // Append the h2 element to the song element
+    const songElement = document.getElementById("songsContainer");
+    songElement.appendChild(h2Element);
+}
+
+// Update the importMusicAndPlay function
+async function importMusicAndPlay() {
+    const fileInput = document.getElementById("fileInput");
+    fileInput.addEventListener("change", async function () {
+        const files = fileInput.files;
+        if (files.length > 0) {
+            const file = files[0];
+
+            const reader = new FileReader();
+
+            reader.onload = async function (e) {
+                const song = {
+                    name: file.name,
+                    url: e.target.result
+                };
+
+                // Save the song to cache
+                await saveSongToCache(song);
+
+                // Load and display all songs from cache
+                const songs = await loadSongsFromCache();
+                displaySongs(songs);
+
+                // Play the imported song directly
+                playSongFromCache(song);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    fileInput.click();
+}
+
+
+
+
+// Function to play a song from cache
+async function playSongFromCache(songName) {
+    const cacheName = 'audioCache';
+    const cache = await caches.open(cacheName);
+
+    const response = await cache.match(songName);
+    if (response) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        // Assuming you have an audio element with ID "audioPlayer" on your pages
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        // Clear existing sources and add the new song
+        audioPlayer.innerHTML = "";
+        const audioSource = document.createElement("source");
+        audioSource.src = url;
+        audioSource.type = "audio/mp3"; // Change the type as needed
+
+        // Append the audio source to the audio player
+        audioPlayer.appendChild(audioSource);
+
+        // Play the song
+        audioPlayer.load();
+        audioPlayer.play();
+    } else {
+        console.error("Song not found in cache.");
+    }
+}
+
+// Update the song switching and playlist logic based on your HTML structure
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("song") || event.target.parentElement.classList.contains("song")) {
+        // Check if the clicked element or its parent has the class "song"
+        var songElement = event.target.closest(".song");
+        var songTitleElement = songElement.querySelector("h2");
+
+        if (songTitleElement) {
+            var songTitle = songTitleElement.innerText;
+
+            // Play the song directly from the cache
+            playSongFromCache(songTitle);
+        } else {
+            console.error("Song title element not found.");
+        }
+    }
+});
