@@ -24,7 +24,100 @@
         </div>
         <!-- Other songs... -->
     </div>
-    <audio id="audioPlayer" controls></audio> <!-- Add this audio element -->
+    <audio id="audioPlayer" controls></audio> <!-- Add this audio element --> 
+    <div class="🎃" id="songsContainer">
+        <!-- Songs will be dynamically added here -->
+    </div>
     <script src="script.js"></script>
+    <script type="module">import * as id3 from '//unpkg.com/id3js@^2/lib/id3.js';</script>
+    <script>
+// Function to load songs from cache
+async function loadSongsFromCache() {
+    try {
+        const cacheName = 'audioCache';
+        const cache = await caches.open(cacheName);
+    
+        const requests = await cache.keys();
+        const songs = [];
+    
+        for (const request of requests) {
+            const response = await cache.match(request);
+            if (response) {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const song = { name: request.url, url };
+                songs.push(song);
+            }
+        }
+    
+        return songs;
+    } catch (error) {
+        console.error("Error loading songs from cache:", error);
+        return [];
+    }
+}
+
+// Function to play a song from cache
+async function playSongFromCache(songName) {
+    const cacheName = 'audioCache';
+    const cache = await caches.open(cacheName);
+
+    const response = await cache.match(songName);
+    if (response) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        // Assuming you have an audio element with ID "audioPlayer" on your pages
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        // Clear existing sources and add the new song
+        audioPlayer.innerHTML = "";
+        const audioSource = document.createElement("source");
+        audioSource.src = url;
+        audioSource.type = "audio/mp3"; // Change the type as needed
+
+        // Append the audio source to the audio player
+        audioPlayer.appendChild(audioSource);
+
+        // Play the song
+        audioPlayer.load();
+        audioPlayer.play();
+    } else {
+        console.error("Song not found in cache.");
+    }
+}
+
+// Update the song switching and playlist logic based on your HTML structure
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("song") || event.target.parentElement.classList.contains("song")) {
+        // Check if the clicked element or its parent has the class "song"
+        var songElement = event.target.closest(".song");
+        var songTitleElement = songElement.querySelector("h2");
+
+        if (songTitleElement) {
+            var songTitle = songTitleElement.innerText;
+
+            // Play the song directly from the cache
+            playSongFromCache(songTitle);
+        } else {
+            console.error("Song title element not found.");
+        }
+    }
+});
+
+
+// Call these functions on page load
+window.onload = async function () {
+    // Load and display all songs from cache on page load
+    try {
+        const songs = await loadSongsFromCache();
+        displaySongs(songs);
+    } catch (error) {
+        console.error("Error loading songs on page load:", error);
+    }
+};
+
+
+    </script>
 </body>
 </html>
