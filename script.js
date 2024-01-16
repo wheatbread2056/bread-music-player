@@ -476,15 +476,12 @@ async function importMusicAndPlay() {
     fileInput.click();
 }
 
-
-
-
 // Function to play a song from cache
-async function playSongFromCache(songName) {
+async function playSongFromCache(song) {
     const cacheName = 'audioCache';
     const cache = await caches.open(cacheName);
 
-    const response = await cache.match(songName);
+    const response = await cache.match(song.name);
     if (response) {
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
@@ -508,21 +505,3 @@ async function playSongFromCache(songName) {
         console.error("Song not found in cache.");
     }
 }
-
-// Update the song switching and playlist logic based on your HTML structure
-document.addEventListener("click", function (event) {
-    if (event.target.classList.contains("song") || event.target.parentElement.classList.contains("song")) {
-        // Check if the clicked element or its parent has the class "song"
-        var songElement = event.target.closest(".song");
-        var songTitleElement = songElement.querySelector("h2");
-
-        if (songTitleElement) {
-            var songTitle = songTitleElement.innerText;
-
-            // Play the song directly from the cache
-            playSongFromCache(songTitle);
-        } else {
-            console.error("Song title element not found.");
-        }
-    }
-});
