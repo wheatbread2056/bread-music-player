@@ -1,4 +1,4 @@
-# Bread Music Player
+# Bread Music Player (abandoned 💀)
 A tiny web music player where you can import, play, and save songs.
 To make your music library, you can import songs from your computer and listen to them in the player.
 After your library is set up, you can make playlists from the music in your library.
@@ -16,3 +16,4 @@ customization as I wanted, to where you can even edit the font itself.
 - mobile responsiveness (very important)
 - Shuffle playlists
 - Queue
+# there are no new updates, and there will not be in the future
